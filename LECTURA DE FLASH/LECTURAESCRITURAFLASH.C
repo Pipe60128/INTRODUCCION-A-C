@@ -1,0 +1,15 @@
+#define __AVR_ATmega16__
+#include <avr/io.h>
+#include <avr/pgmspace.h>
+
+//CREAR TABLA EN FLASH
+const char tabla[] PROGMEM = {0x3F,0x06,0x5B,0x4F,0x66,0x6D,0x7D,0x07,
+0x7F, 0x67, 0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71};
+
+int main(void)
+{
+    DDRB = 0x00;
+    //LEER FLASH
+    PINB = pgm_read_byte(&tabla[5]);
+    return 0;
+}

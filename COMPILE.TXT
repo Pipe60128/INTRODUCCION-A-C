@@ -1,0 +1,12 @@
+avr-gcc -mmcu=atmega16 -o main.elf main.c
+
+CREACION DE HEX
+avr-objcopy -O ihex main.elf main.hex
+
+cosas para el compila en este cas
+compile path
+C:/Program Files (x86)/Atmel/Studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/avr-gcc.exe
+
+include path
+${workspaceFolder}/**
+C:/Program Files (x86)/Atmel/Studio/7.0/toolchain/avr8/avr8-gnu-toolchain/avr/include
