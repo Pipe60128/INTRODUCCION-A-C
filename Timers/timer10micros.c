@@ -3,6 +3,7 @@
 #define __AVR_ATmega16__
 #include <avr/io.h> 
 
+
 void Delay10micros(){
     TCNT0 = 176;
     TCCR0 = 0b00000001; // Configurar el temporizador con un prescaler de 1
