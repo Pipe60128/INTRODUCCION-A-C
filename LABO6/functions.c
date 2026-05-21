@@ -38,3 +38,26 @@ void PWM_ININT_SWITCH1() {
                 while (!(PINB & (1 << PB7))); // espera a soltar el botón
             }
 }
+void contartimer1() {
+    OCR1A = 10;
+    TCCR1A = 0; 
+    TCCR1B = 0b00001110;
+    while((TIFR & (1 << OCF1A)) == 0);
+    TCCR1A =0;
+    TCCR1B = 0; // Detener el temporizador
+    TIFR |= (1 << OCF1A); // Limpiar la bandera de desbordamiento
+}
+void delaydinamics(uint16_t s) {
+    OCR1A = s;
+    TCCR1A = 0; 
+    TCCR1B = 0b00001110;
+    while((TIFR & (1 << OCF1A)) == 0);
+    TCCR1B = 0; // Detener el temporizador
+    TIFR |= (1 << OCF1A); // Limpiar la bandera de desbordamiento
+}
+void SWITCH3() {
+    contartimer1(10);
+    PORTD &= (~1<<PD5);
+    delaydinamics(234);
+    PORTD |= (1<<PD5);
+}

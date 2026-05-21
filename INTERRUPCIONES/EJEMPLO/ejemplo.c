@@ -24,10 +24,15 @@ ISR(INT0_vect){
     cont = 100;
 }
 ISR(INT1_vect){
-
+    PORTB &= ~(1<<PB0) & ~(1<<PB1);
+    TCCR0 = 0;
 }
 ISR(TIMER0_COMP_vect){
-
+    cont--;
+    if(cont == 0){
+        cont = 100;
+        PORTB ^= (1<<PB0);
+    }
 }
 
 int main() {
