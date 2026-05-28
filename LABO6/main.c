@@ -15,8 +15,16 @@ int main() {
         while (!(PINB & (1<< PB0)))  {
             PWM_ININT_SWITCH1();
         }
-         while (!(PINB & (1<< PB2)))  {
+        while  (!(PINB & (1<< PB2)))  {
             SWITCH3();
+        }
+
+        while (!(PINB & (1<< PB3)))  {
+            activateT0PWM(55); //78% duty cycle
+            activateT1PWM();
+            while(!(PINB & (1<< PB3)));
+            deactivateT0PWM();
+            deactivateT1PWM();
         }
     }
 }

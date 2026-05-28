@@ -36,7 +36,6 @@ ISR(TIMER0_COMP_vect){
 }
 
 int main() {
-    DDRB |= (1<<PB0) | (1<<PB1); 
     GICR |= 0b11000000;
     MCUCR |= 0b00001010;
     TIMSK |= 0b00000010;

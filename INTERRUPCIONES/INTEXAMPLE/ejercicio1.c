@@ -8,6 +8,7 @@ Realice un programa que haga un toggle del Puerto PC3 cuando un switch conectado
 ISR(INT0_vect) {
     PORTC ^= (1<<PC3);
 }
+
 int main( ) {
     DDRC |= (1<<PC3);
     GICR |= 0b01000000;

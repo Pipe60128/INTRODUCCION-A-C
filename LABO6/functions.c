@@ -38,6 +38,7 @@ void PWM_ININT_SWITCH1() {
                 while (!(PINB & (1 << PB7))); // espera a soltar el botón
             }
 }
+
 void contartimer1() {
     OCR1A = 10;
     TCCR1A = 0; 
@@ -47,17 +48,46 @@ void contartimer1() {
     TCCR1B = 0; // Detener el temporizador
     TIFR |= (1 << OCF1A); // Limpiar la bandera de desbordamiento
 }
-void delaydinamics(uint16_t s) {
-    OCR1A = s;
+void delaydinamics( ) {
+    OCR1A = 31249;
     TCCR1A = 0; 
-    TCCR1B = 0b00001110;
+    TCCR1B = 0b00001100;
     while((TIFR & (1 << OCF1A)) == 0);
     TCCR1B = 0; // Detener el temporizador
     TIFR |= (1 << OCF1A); // Limpiar la bandera de desbordamiento
 }
 void SWITCH3() {
-    contartimer1(10);
-    PORTD &= (~1<<PD5);
-    delaydinamics(234);
-    PORTD |= (1<<PD5);
+    while (!(PINB & (1 << PB2))) {
+        contartimer1();
+        PORTD &= ~(1<<PD5);
+        delaydinamics();
+        PORTD |= (1<<PD5);
+        break;
+    }
+}
+
+void activateT0PWM(uint8_t ocr0) {
+    OCR0 = ocr0; // for 78% Duty Cycle use 55
+    TCCR0 = (1 << WGM00) | (1 << WGM01) | (1 << COM01) | (1 << COM00) | (1 << CS02);
+}
+
+void activateT1PWM() {
+    OCR1A = 9999; // TOP
+    OCR1B = 2199;
+
+    TCCR1A = (1 << WGM11) | (1 << WGM10) | (1 << COM1B0) | (1 << COM1B1);
+    TCCR1B = (1 << WGM13) | (1 << WGM12) | (1 << CS11);
+}
+
+void deactivateT0PWM() {
+    TCCR0 = 0;
+    OCR0 = 0;
+}
+
+void deactivateT1PWM() {
+    TCCR1B = 0;
+    TCCR1A = 0;
+    OCR1A = 0;
+    OCR1B = 0;
+
 }

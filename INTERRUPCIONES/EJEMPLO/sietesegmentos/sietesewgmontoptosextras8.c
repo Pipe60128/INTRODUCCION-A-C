@@ -21,6 +21,6 @@ int main() {
     DDRB = 0xFF;
     TIMSK = 0b00000010; //tc0 comapre
     SEI();
-    OCR0 = 38;
+    OCR0 = 19;
     TCCR0 = 0b00001101; //t0 ctc 1024
 }
