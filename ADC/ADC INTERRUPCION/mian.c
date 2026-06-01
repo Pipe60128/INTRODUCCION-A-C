@@ -12,6 +12,9 @@ int main(){
     while(1){
         ADCSRA |= (1<<ADSC); // START CONVERSOIN
         while((ADCSRA & (1<<ADIF) == 0)); //awit to finish converison
+        ADCSRA |= (1<<ADIF); // START CONVERSOIN
+        PORTB = ADCL;
+        PORTD = ADCH;
     }
     return 0;
 }
